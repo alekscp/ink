@@ -21,12 +21,11 @@ mod erc20 {
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_storage::{
         collections::HashMap as StorageHashMap,
-        lazy::Lazy,
     };
 
     #[ink(storage)]
     pub struct Erc20 {
-        total_supply: Lazy<Balance>,
+        total_supply: Balance,
         balances: StorageHashMap<AccountId, Balance>,
         allowances: StorageHashMap<(AccountId, AccountId), Balance>,
     }
@@ -58,7 +57,7 @@ mod erc20 {
             let mut balances = StorageHashMap::new();
             balances.insert(caller, initial_supply);
             let instance = Self {
-                total_supply: Lazy::new(initial_supply),
+                total_supply: initial_supply,
                 balances,
                 allowances: StorageHashMap::new(),
             };
@@ -72,7 +71,7 @@ mod erc20 {
 
         #[ink(message)]
         pub fn total_supply(&self) -> Balance {
-            *self.total_supply
+            self.total_supply
         }
 
         #[ink(message)]
