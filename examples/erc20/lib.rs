@@ -17,7 +17,7 @@
 use ink_lang as ink;
 
 #[ink::contract]
-mod erc20 {
+mod Erc20 {
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_storage::{
         collections::HashMap as StorageHashMap,
@@ -186,8 +186,8 @@ mod erc20 {
                 panic!("encountered unexpected event kind: expected a Transfer event")
             }
             fn encoded_into_hash<T>(entity: &T) -> Hash
-            where
-                T: scale::Encode,
+                where
+                    T: scale::Encode,
             {
                 let mut result = Hash::clear();
                 let len_result = result.as_ref().len();
@@ -211,7 +211,7 @@ mod erc20 {
                 encoded_into_hash(&expected_value),
             ];
             for (n, (actual_topic, expected_topic)) in
-                event.topics.iter().zip(expected_topics).enumerate()
+            event.topics.iter().zip(expected_topics).enumerate()
             {
                 let topic = actual_topic
                     .decode::<Hash>()
